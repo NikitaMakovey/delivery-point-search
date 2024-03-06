@@ -15,11 +15,12 @@ $password = $_ENV['DB_PASSWORD'];
 $databaseName = $_ENV['DB_NAME'];
 
 $createDatabaseSQL = "CREATE DATABASE \"$databaseName\"";
+$deleteDatabaseSQL = "DROP DATABASE IF EXISTS \"$databaseName\"";
 
 $createBranchesTableSQL = "
 CREATE TABLE IF NOT EXISTS branches (
     id SERIAL PRIMARY KEY,
-    uik INT NOT NULL,
+    uik INT NOT NULL UNIQUE,
     uik_address TEXT NOT NULL
 );";
 
@@ -44,6 +45,8 @@ if (!$dbExists) {
     $pdoServer->exec($createDatabaseSQL);
     echo "Database '$databaseName' created successfully.\n";
 } else {
+    $pdoServer->exec($deleteDatabaseSQL);
+    $pdoServer->exec($createDatabaseSQL);
     echo "Database '$databaseName' already exists.\n";
 }
 
@@ -57,3 +60,8 @@ echo "Table 'branches' is ready.\n";
 
 $pdoDB->exec($createAddressesTableSQL);
 echo "Table 'addresses' is ready.\n";
+
+// Create combined B-tree index on 'addresses' table
+$createCombinedIndexSQL = "CREATE INDEX IF NOT EXISTS idx_addresses_combined ON addresses(location, street, house);";
+$pdoDB->exec($createCombinedIndexSQL);
+echo "Combined index on 'location', 'street', and 'house' columns created.\n";

@@ -20,8 +20,6 @@ $database($container);
 
 $app = SlimAppFactory::create($container);
 
-$app->getContainer()->get('database');
-
 $middleware = require __DIR__ . '/../app/middleware.php';
 $middleware($app);
 
