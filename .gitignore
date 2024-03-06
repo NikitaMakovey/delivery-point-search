@@ -1,0 +1,10 @@
+/node_modules
+/storage/
+/vendor
+/.idea
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+*.DS_Store*
