@@ -1,6 +1,5 @@
 <?php
 
-use App\Core\DatabaseConnection;
 use DI\Container;
 use DI\Bridge\Slim\Bridge as SlimAppFactory;
 use Dotenv\Dotenv;
@@ -16,13 +15,12 @@ $container = new Container();
 $settings = require __DIR__ . '/../app/settings.php';
 $settings($container);
 
+$database = require __DIR__ . '/../app/database.php';
+$database($container);
+
 $app = SlimAppFactory::create($container);
 
-$container = $app->getContainer();
-
-$container['db'] = function ($c) {
-    return DatabaseConnection::getInstance()->getConnection();
-};
+$app->getContainer()->get('database');
 
 $middleware = require __DIR__ . '/../app/middleware.php';
 $middleware($app);
