@@ -11,9 +11,9 @@ return function (App $app) {
     {
         $response = $handler->handle($request);
         return $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Origin', 'https://www-xn--27-dlcmaa0acz0cc8k-xn--p1ai.filesusr.com')
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization, Ngrok-Skip-Browser-Warning')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            ->withHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
     };
     $app->add($corsMiddleware);
 
