@@ -23,7 +23,9 @@ class SearchController
         // Convert results to JSON
         $response->getBody()->write(json_encode(array_map(fn ($item) => [
             'branch_id' => $item['branch_id'],
-            'address' => "{$item['location']}, {$item['street']}" . ($item['house'] == '*' ? '' : " {$item['house']}"),
+            'address' => "{$item['location']}" .
+                (in_array($item['street'], ['*', '']) ? '' : ", {$item['street']}") .
+                (in_array($item['house'], ['*', '']) ? '' : ", {$item['house']}"),
         ], $results)));
         return $response->withHeader('Content-Type', 'application/json');
     }
