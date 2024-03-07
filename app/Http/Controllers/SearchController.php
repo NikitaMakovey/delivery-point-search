@@ -16,7 +16,7 @@ class SearchController
 
         $dbConnection = DatabaseConnection::getInstance()->getConnection();
 
-        $stmt = $dbConnection->prepare("SELECT * FROM addresses WHERE location ILIKE :query OR street ILIKE :query LIMIT 5");
+        $stmt = $dbConnection->prepare("SELECT * FROM addresses WHERE location ILIKE :query OR street ILIKE :query ORDER BY location, street, house LIMIT 5");
         $stmt->execute(['query' => "%$searchQuery%"]);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
