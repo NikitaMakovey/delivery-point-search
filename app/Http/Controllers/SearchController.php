@@ -54,6 +54,7 @@ class SearchController
         );
         $searchQuery = $this->getRawSearchString($searchQuery);
         $filteredSearchQuery = $this->getFilteredSearchString($searchQuery);
+        $filteredSearchQuery = $filteredSearchQuery == '' ? $searchQuery : $filteredSearchQuery;
         $stmt->execute(['raw_query' => "%{$searchQuery}%", 'filtered_query' => "%{$filteredSearchQuery}%"]);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
