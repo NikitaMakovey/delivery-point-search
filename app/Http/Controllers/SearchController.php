@@ -46,10 +46,10 @@ class SearchController
         $stmt = $dbConnection->prepare(
             "SELECT * FROM addresses 
             WHERE 
-                context ILIKE :raw_query OR (
+                (context ILIKE :raw_query OR (
                     context ILIKE :filtered_query AND 
                     house = '*'
-                )
+                )) AND display_address != '*'
             ORDER BY context LIMIT 5"
         );
         $searchQuery = $this->getRawSearchString($searchQuery);
